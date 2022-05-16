@@ -10,6 +10,9 @@ spring:
         instance-id: ${spring.application.name}:${random.uuid}
 
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
         - id: to-client
           uri: lb://client-service
@@ -30,8 +33,15 @@ spring:
           uri: lb://movie-service
           predicates:
             - Path=/word
+            - name: NumberOfParams
+              args:
+                equals: 0
+#                min: 0
+#                max: 0
           filters:
-            - AddRequestParameter=word,gateway
-      discovery:
-        locator:
-          enabled: true
+            - name: AddRequestParameter
+              args:
+                name: word
+                value: gateway
+            - name: Logger
+

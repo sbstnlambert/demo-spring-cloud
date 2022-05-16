@@ -1,5 +1,6 @@
 package be.technifutur.gateway2.config;
 
+import be.technifutur.gateway2.predicate.NumberOfParamsRoutePredicateFactory;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +12,7 @@ public class RouteLocatorConfig {
     // /client/** -> client service
     // /movie/** -> movie service
 //    @Bean
-    public RouteLocator routeLocator(RouteLocatorBuilder builder) {
+    public RouteLocator routeLocator(RouteLocatorBuilder builder, NumberOfParamsRoutePredicateFactory predicateFactory) {
         return builder.routes()
                 .route("to-client",
                         r -> r.path("/client/**")
@@ -33,6 +34,8 @@ public class RouteLocatorConfig {
                         r -> r.path("/word")
                                 .and()
                                 .method("GET")
+                                .and()
+                                .predicate(predicateFactory.apply(new NumberOfParamsRoutePredicateFactory.Config(0)))
                                 .filters(req -> req.addRequestParameter("word", "gateway"))
                                 .uri("lb://movie-service")
                 )
