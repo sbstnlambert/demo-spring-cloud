@@ -29,6 +29,13 @@ public class RouteLocatorConfig {
                                 .filters(f -> f.rewritePath("/movie/(?<path>.*)", "/$\\{path}"))
                                 .uri("lb://movie-service")
                 )
+                .route("word",
+                        r -> r.path("/word")
+                                .and()
+                                .method("GET")
+                                .filters(req -> req.addRequestParameter("word", "gateway"))
+                                .uri("lb://movie-service")
+                )
                 .build();
     }
 

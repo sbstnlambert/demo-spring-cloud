@@ -6,6 +6,7 @@
 		<module>MovieService</module>
 		<module>ClientService</module>
 		<module>ApiGateway</module>
+		<module>ApiGatewayV2</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

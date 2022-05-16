@@ -26,6 +26,12 @@ spring:
             - Path=/movie/**
           filters:
             - RewritePath=/movie/(?<path>.*),/$\{path}
+        - id: word
+          uri: lb://movie-service
+          predicates:
+            - Path=/word
+          filters:
+            - AddRequestParameter=word,gateway
       discovery:
         locator:
           enabled: true
