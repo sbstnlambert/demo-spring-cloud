@@ -1,5 +1,7 @@
 package be.technifutur.gateway2.predicate;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.cloud.gateway.handler.predicate.AbstractRoutePredicateFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -27,10 +29,11 @@ public class NumberOfParamsRoutePredicateFactory extends AbstractRoutePredicateF
         };
     }
 
+    @Getter @Setter
     public static class Config {
-        Integer equals;
-        Integer min;
-        Integer max;
+        private Integer equals;
+        private Integer min;
+        private Integer max;
 
         public Config() {
         }
